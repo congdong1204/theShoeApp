@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -25,6 +26,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+Icon.loadFont();
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -71,6 +74,7 @@ const App: () => Node = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
+            <Icon name="ios-person" size={30} color="#4F8EF7" />
             Edit <Text style={styles.highlight}>App.js</Text> to change this
             screen and then come back to see your edits.
           </Section>
@@ -96,8 +100,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   sectionTitle: {
+    fontFamily: 'Manrope-Light',
     fontSize: 24,
-    fontWeight: '600',
+    // fontWeight: '600',
   },
   sectionDescription: {
     marginTop: 8,
