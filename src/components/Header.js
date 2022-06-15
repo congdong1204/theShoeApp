@@ -19,7 +19,15 @@ const heightNavi = h =>
     },
   });
 
-const Header = ({title, leftIcon, rightIcon, onPressLeft, onPressRight}) => {
+const Header = ({
+  title,
+  leftIcon,
+  rightIcon,
+  onPressLeft,
+  onPressRight,
+  backgroundColor = Color.background,
+  titleColor = Color.primary,
+}) => {
   const [h, setH] = useState(0);
   useEffect(() => {
     const {StatusBarManager} = NativeModules;
@@ -28,17 +36,17 @@ const Header = ({title, leftIcon, rightIcon, onPressLeft, onPressRight}) => {
   return (
     <View style={heightNavi(h).fullView}>
       {Platform.OS === 'ios' && (
-        <View style={{backgroundColor: Color.background, height: h}} />
+        <View style={{backgroundColor: backgroundColor, height: h}} />
       )}
-      <View style={styles.container}>
+      <View style={{...styles.container, backgroundColor: backgroundColor}}>
         <TouchableOpacity onPress={onPressLeft}>
-          <Entypo name={leftIcon} size={32} color={Color.primary} />
+          <Entypo name={leftIcon} size={32} color={titleColor} />
         </TouchableOpacity>
         <View>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={{...styles.title, color: titleColor}}>{title}</Text>
         </View>
         <TouchableOpacity onPress={onPressRight}>
-          <Entypo name={rightIcon} size={32} color={Color.primary} />
+          <Entypo name={rightIcon} size={24} color={titleColor} />
         </TouchableOpacity>
       </View>
     </View>
@@ -52,12 +60,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 60,
     width: '100%',
-    backgroundColor: Color.background,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
   },
   title: {
     fontSize: 20,
-    color: Color.primary,
     fontWeight: '700',
   },
 });

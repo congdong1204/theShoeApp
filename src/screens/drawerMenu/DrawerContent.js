@@ -13,7 +13,6 @@ Entypo.loadFont();
 FontAwesome.loadFont();
 const DrawerContent = () => {
   const userInfo = useSelector(state => state.authen.userInfo);
-  console.log(userInfo);
   return (
     <View style={styles.container}>
       <DrawerContentScrollView>
@@ -35,11 +34,13 @@ const DrawerContent = () => {
         <View style={styles.navigateContainer}>
           <TouchableOpacity
             style={styles.navigateWrapper}
-            onPress={() => NavigationService.navigate(Routes.HOME)}>
+            onPress={() => NavigationService.navigate(Routes.HOME_SCREEN)}>
             <Entypo name="menu" size={26} color={Color.primary} />
             <Text style={styles.navigateText}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.navigateWrapper}>
+          <TouchableOpacity
+            style={styles.navigateWrapper}
+            onPress={() => NavigationService.navigate(Routes.FAVORITE_SCREEN)}>
             <FontAwesome name="heart" size={20} color={Color.primary} />
             <Text style={styles.navigateText}>Your Favorites</Text>
           </TouchableOpacity>

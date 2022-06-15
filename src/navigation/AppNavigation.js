@@ -7,6 +7,8 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import LoginScreen from '../screens/login_signup/LoginScreen';
 import HomeScreen from '../screens/home';
 import DrawerMenu from '../screens/drawerMenu';
+import ProductDetailScreen from '../screens/productDetail';
+import FavoriteScreen from '../screens/favorite';
 import Routes from './Routes';
 
 const Stack = createStackNavigator();
@@ -32,8 +34,16 @@ const RootNavigation = () => {
         screenOptions={{headerShown: false}}
         initialRouteName={Routes.LOGIN_SCREEN}>
         <Stack.Screen name={Routes.LOGIN_SCREEN} component={LoginScreen} />
-        <Stack.Screen name={Routes.DRAWER} component={DrawerMenu} />
-        <Stack.Screen name={Routes.HOME} component={HomeScreen} />
+        <Stack.Screen name={Routes.DRAWER_MENU} component={DrawerMenu} />
+        <Stack.Screen name={Routes.HOME_SCREEN} component={HomeScreen} />
+        <Stack.Screen
+          name={Routes.FAVORITE_SCREEN}
+          component={FavoriteScreen}
+        />
+        <Stack.Screen
+          name={Routes.PRODUCT_DETAIL_SCREEN}
+          component={ProductDetailScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
     // <NavigationContainer>

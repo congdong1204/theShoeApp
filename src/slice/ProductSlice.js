@@ -4,6 +4,7 @@ const initialState = {
   allProducts: [],
   categories: [],
   productsByCategory: [],
+  favoriteProducts: [],
 };
 
 const productSlice = createSlice({
@@ -20,6 +21,9 @@ const productSlice = createSlice({
       })
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.allProducts = action.payload;
+      })
+      .addCase(fetchFavoriteProducts.fulfilled, (state, action) => {
+        state.favoriteProducts = action.payload;
       });
   },
 });
@@ -52,6 +56,23 @@ export const fetchProductsByCategory = createAsyncThunk(
     );
     const json = await resp.json();
     return json.content;
+  },
+);
+
+export const fetchFavoriteProducts = createAsyncThunk(
+  'favoriteProducts/fetchFavoriteProducts',
+  async (arg, {getState}) => {
+    const resp = await fetch(
+      'http://svcy3.myclass.vn/api/Users/getproductfavorite',
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getState().authen.token}`,
+        },
+      },
+    );
+    const data = await resp.json();
+    return data.content.productsFavorite;
   },
 );
 

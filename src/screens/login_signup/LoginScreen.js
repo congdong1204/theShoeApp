@@ -7,7 +7,12 @@ import {useDispatch} from 'react-redux';
 import Input from '../../components/Input';
 import Checkbox from '../../components/Checkbox';
 import Color from '../../constants/Color';
-import {fetchLogin} from '../../slice/AuthSlice';
+import {fetchLogin, fetchUserProfile} from '../../slice/AuthSlice';
+import {
+  fetchCategories,
+  fetchAllProducts,
+  fetchFavoriteProducts,
+} from '../../slice/ProductSlice';
 import NavigationService from '../../navigation';
 import Routes from '../../navigation/Routes';
 
@@ -19,7 +24,7 @@ const SingupSchema = Yup.object().shape({
     .required('Required'),
 });
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = () => {
   const dispatch = useDispatch();
   const [checkRemember, setCheckRemember] = useState(false);
   const [error, setError] = useState();
@@ -27,7 +32,11 @@ const LoginScreen = ({navigation}) => {
   const handleSubmit = async values => {
     try {
       await dispatch(fetchLogin(values));
-      navigation.navigate(Routes.DRAWER);
+      await dispatch(fetchUserProfile());
+      await dispatch(fetchCategories());
+      await dispatch(fetchAllProducts());
+      await dispatch(fetchFavoriteProducts());
+      NavigationService.navigate(Routes.DRAWER_MENU);
     } catch (err) {
       console.log('pham cong dong');
     }
@@ -85,7 +94,10 @@ const LoginScreen = ({navigation}) => {
           </Formik>
         </View>
       </View>
-      <View style={styles.downWrapper}></View>
+      <View style={styles.downWrapper}>
+        <Text style={{color: Color.textWhite}}>Don’t have an account?</Text>
+        <Text style={{color: Color.red}}>Sign up</Text>
+      </View>
     </View>
   );
 };
@@ -113,7 +125,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   titile: {
-    color: Color.accent,
+    color: Color.primary,
     fontSize: 28,
     fontFamily: 'Manrope-Bold',
     textAlign: 'center',
@@ -140,7 +152,7 @@ const styles = StyleSheet.create({
     marginVertical: 24,
   },
   buttonText: {
-    color: Color.accent,
+    color: Color.textWhite,
     fontSize: 16,
     fontFamily: 'Manrope-Bold',
   },
