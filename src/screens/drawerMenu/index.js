@@ -6,6 +6,8 @@ import Routes from '../../navigation/Routes';
 import HomeScreen from '../home';
 import FavoriteScreen from '../favorite';
 import DrawerContent from './DrawerContent';
+import UserProfileScreen from '../userProfile';
+import EditUserProfileScreen from '../editUserProfile';
 
 const Drawer = createDrawerNavigator();
 
@@ -20,6 +22,14 @@ const DrawerMenu = () => {
       initialRouteName={Routes.HOME_SCREEN}>
       <Drawer.Screen name={Routes.HOME_SCREEN} component={HomeScreen} />
       <Drawer.Screen name={Routes.FAVORITE_SCREEN} component={FavoriteScreen} />
+      <Drawer.Screen
+        name={Routes.USER_PROFILE_SCREEN}
+        component={UserProfileScreen}
+      />
+      <Drawer.Screen
+        name={Routes.EDIT_USER_PROFILE_SCREEN}
+        component={EditUserProfileScreen}
+      />
     </Drawer.Navigator>
   );
 };

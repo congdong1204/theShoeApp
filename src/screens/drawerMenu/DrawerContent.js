@@ -26,7 +26,10 @@ const DrawerContent = () => {
           />
           <View style={styles.userInfoWrapper}>
             <Text style={styles.userName}>{userInfo.name}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                NavigationService.navigate(Routes.USER_PROFILE_SCREEN)
+              }>
               <Text style={styles.viewProfileText}>View your profile</Text>
             </TouchableOpacity>
           </View>

@@ -44,8 +44,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Manrope-Regular',
   },
   input: {
-    paddingHorizontal: 2,
-    paddingVertical: 5,
     backgroundColor: Color.gray,
     borderRadius: 8,
     paddingHorizontal: 24,
@@ -54,8 +52,6 @@ const styles = StyleSheet.create({
     color: Color.textDark,
   },
   inputError: {
-    paddingHorizontal: 2,
-    paddingVertical: 5,
     backgroundColor: Color.gray,
     borderRadius: 8,
     paddingHorizontal: 24,

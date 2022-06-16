@@ -63,6 +63,7 @@ const LoginScreen = () => {
               <View>
                 <Input
                   label="Email"
+                  placeholder="Please enter your email"
                   inputValue={values.email}
                   textChangeHandler={handleChange('email')}
                   textBlurHandler={handleBlur('email')}
@@ -71,6 +72,7 @@ const LoginScreen = () => {
                 />
                 <Input
                   label="Password"
+                  placeholder="Please enter your password"
                   inputValue={values.password}
                   textChangeHandler={handleChange('password')}
                   textBlurHandler={handleBlur('password')}
