@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {SwipeListView} from 'react-native-swipe-list-view';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 
 import Header from '../../components/Header';
 import Color from '../../constants/Color';
@@ -16,7 +10,7 @@ import NavigationService from '../../navigation';
 import Routes from '../../navigation/Routes';
 import {fetchFavoriteProducts} from '../../slice/ProductSlice';
 
-FontAwesome.loadFont();
+Fontisto.loadFont();
 
 const FavoriteScreen = () => {
   const dispatch = useDispatch();
@@ -40,6 +34,7 @@ const FavoriteScreen = () => {
   const renderFavoriteProduct = prod => {
     return (
       <TouchableOpacity
+        activeOpacity={1}
         style={styles.favoriteProductWrapper}
         onPress={() =>
           NavigationService.navigate(Routes.PRODUCT_DETAIL_SCREEN, {
@@ -57,11 +52,6 @@ const FavoriteScreen = () => {
           <Text style={styles.productTitle}>{prod.name}</Text>
           <Text style={styles.productPrice}>${prod.price}</Text>
         </View>
-        <TouchableOpacity
-          style={styles.iconWrapper}
-          onPress={() => handleUnlike(prod.id)}>
-          <FontAwesome name="heart" size={24} color={Color.accent} />
-        </TouchableOpacity>
       </TouchableOpacity>
     );
   };
@@ -74,10 +64,17 @@ const FavoriteScreen = () => {
         onPressLeft={() => NavigationService.toggleDrawer()}
       />
       <View style={styles.favoriteListContainer}>
-        <FlatList
+        <SwipeListView
           data={newFavoriteProducts}
           renderItem={({item}) => renderFavoriteProduct(item)}
-          showsVerticalScrollIndicator={false}
+          renderHiddenItem={({item}) => (
+            <TouchableOpacity
+              onPress={() => handleUnlike(item.id)}
+              style={styles.deleteProductWrapper}>
+              <Fontisto name="trash" size={24} color={Color.white} />
+            </TouchableOpacity>
+          )}
+          rightOpenValue={-100}
         />
       </View>
     </View>
@@ -99,7 +96,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     marginBottom: 20,
     padding: 12,
-    backgroundColor: Color.white,
     shadowColor: 'black',
     shadowColor: '#000',
     shadowOffset: {
@@ -108,7 +104,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    backgroundColor: 'white',
+    backgroundColor: Color.white,
     elevation: 5,
     borderRadius: 12,
   },
@@ -136,14 +132,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Color.primary,
   },
-  iconWrapper: {
+  deleteProductWrapper: {
+    alignSelf: 'flex-end',
+    backgroundColor: Color.accent,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'pink',
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    width: 42,
+    borderRadius: 12,
+    height: 124,
+    width: 88,
+    marginRight: 12,
   },
 });
 

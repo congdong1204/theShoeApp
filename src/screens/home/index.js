@@ -18,10 +18,12 @@ import {
 import Color from '../../constants/Color';
 import NavigationService from '../../navigation';
 import Routes from '../../navigation/Routes';
+import LoadingView from '../../components/LoadingView';
 
 Entypo.loadFont();
 
 const HomeScreen = () => {
+  const [loading, setLoading] = useState(true);
   console.log('render home screen...');
   const categories = useSelector(state => state.product.categories);
   const productsByCategory = useSelector(
@@ -35,6 +37,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(fetchProductsByCategory('ADIDAS'));
+    setLoading(false);
   }, []);
 
   const handlePressCategory = item => {
@@ -140,6 +143,7 @@ const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
         />
       </View>
+      {loading && <LoadingView />}
     </View>
   );
 };

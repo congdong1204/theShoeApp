@@ -15,6 +15,7 @@ import {
 } from '../../slice/ProductSlice';
 import NavigationService from '../../navigation';
 import Routes from '../../navigation/Routes';
+import LoadingView from '../../components/LoadingView';
 
 const SingupSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
@@ -27,10 +28,12 @@ const SingupSchema = Yup.object().shape({
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const [checkRemember, setCheckRemember] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
   const handleSubmit = async values => {
     try {
+      setIsLoading(true);
       await dispatch(fetchLogin(values));
       await dispatch(fetchUserProfile());
       await dispatch(fetchCategories());
@@ -38,7 +41,7 @@ const LoginScreen = () => {
       await dispatch(fetchFavoriteProducts());
       NavigationService.navigate(Routes.DRAWER_MENU);
     } catch (err) {
-      console.log('pham cong dong');
+      console.log(err.mes);
     }
   };
 
@@ -69,6 +72,7 @@ const LoginScreen = () => {
                   textBlurHandler={handleBlur('email')}
                   error={errors.email}
                   touched={touched.email}
+                  // autoCapitalize={false}
                 />
                 <Input
                   label="Password"
@@ -100,6 +104,7 @@ const LoginScreen = () => {
         <Text style={{color: Color.textWhite}}>Don’t have an account?</Text>
         <Text style={{color: Color.red}}>Sign up</Text>
       </View>
+      {isLoading && <LoadingView />}
     </View>
   );
 };
@@ -165,25 +170,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
-
-// const apiSignin = () => {
-//   const body = {
-//     email: 'congdong@gmail.com',
-//     password: 'congdong123',
-//   };
-//   axios({
-//     method: 'post',
-//     url: 'http://svcy3.myclass.vn/api/Users/signin',
-//     headers: {
-//       Accept: '*/*',
-//       'Content-Type': 'application/json',
-//     },
-//     data: body,
-//   })
-//     .then(response => {
-//       console.log('data: ', response.data);
-//     })
-//     .catch(error => {
-//       console.error('There was an error!', error);
-//     });
-// };

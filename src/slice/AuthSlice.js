@@ -30,12 +30,9 @@ export const fetchLogin = createAsyncThunk(
       },
       body: JSON.stringify(userData),
     });
-    if (!res.ok) {
-      // const errorData = await res.json();
-      // console.log(errorData.message);
-      // throw new Error('Something went wrong!');
+    if (res.ok === false) {
       console.log('Something went wrong!');
-      throw new Error('Something went wrong!');
+      throw new Error(mes);
     }
     const json = await res.json();
     return json.content.accessToken;
