@@ -8,6 +8,7 @@ import FavoriteScreen from '../favorite';
 import DrawerContent from './DrawerContent';
 import UserProfileScreen from '../userProfile';
 import EditUserProfileScreen from '../editUserProfile';
+import Color from '../../constants/Color';
 
 const Drawer = createDrawerNavigator();
 
@@ -18,6 +19,10 @@ const DrawerMenu = () => {
       screenOptions={{
         headerShown: false,
         drawerType: 'slide',
+        drawerStyle: {
+          width: 240,
+          backgroundColor: Color.background,
+        },
       }}
       initialRouteName={Routes.HOME_SCREEN}>
       <Drawer.Screen name={Routes.HOME_SCREEN} component={HomeScreen} />

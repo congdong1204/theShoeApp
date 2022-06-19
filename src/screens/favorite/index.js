@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   productImageWrapper: {
-    backgroundColor: Color.background,
+    backgroundColor: Color.gray,
     borderRadius: 12,
   },
   productImage: {

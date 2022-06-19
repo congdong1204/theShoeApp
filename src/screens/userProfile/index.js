@@ -29,8 +29,14 @@ const UserProfileScreen = () => {
         onPressLeft={() => NavigationService.toggleDrawer()}
       />
       <ScrollView style={styles.userInfoContainer}>
-        <UserInfo label="Full name" content={userInfo.name} />
-        <UserInfo label="Phone Number" content={userInfo.phone} />
+        <UserInfo
+          label="Full name"
+          content={userInfo.name ? userInfo.name : 'null'}
+        />
+        <UserInfo
+          label="Phone Number"
+          content={userInfo.phone ? userInfo.phone : 'null'}
+        />
         <UserInfo
           label="Gender"
           content={userInfo.gender ? 'Male' : 'Female'}

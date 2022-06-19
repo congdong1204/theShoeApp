@@ -67,7 +67,7 @@ const ProductDetailScreen = ({route}) => {
               showsHorizontalScrollIndicator={false}
             />
           </View>
-          <View style={styles.descriptionWrapper}>
+          <View>
             <Text style={styles.descriptionTitle}>Description</Text>
             <Text style={styles.descriptionText}>{product.description}</Text>
           </View>
@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     borderRadius: 16,
     shadowColor: 'black',
-    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -143,14 +142,20 @@ const styles = StyleSheet.create({
     width: 36,
     height: 48,
     marginRight: 12,
+    marginBottom: 16,
     borderRadius: 8,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   sizetext: {
     fontFamily: 'Manrope-Medium',
     fontSize: 16,
-  },
-  descriptionWrapper: {
-    marginTop: 16,
   },
   descriptionTitle: {
     fontFamily: 'Manrope-SemiBold',

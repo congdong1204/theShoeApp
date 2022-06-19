@@ -58,7 +58,8 @@ const EditUserProfileScreen = () => {
         onPressRight={() => formRef.current.handleSubmit()}
         leftIcon="chevron-left"
         onPressLeft={() =>
-          NavigationService.navigate(Routes.USER_PROFILE_SCREEN)
+          // NavigationService.navigate(Routes.USER_PROFILE_SCREEN)
+          NavigationService.goBack()
         }
       />
       <ScrollView style={styles.infoContainer}>

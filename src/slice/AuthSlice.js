@@ -8,36 +8,17 @@ const initialState = {
 const authSlice = createSlice({
   name: 'authen',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    getUserToken: (state, action) => {
+      state.token = action.payload;
+    },
+  },
   extraReducers: builder => {
-    builder
-      .addCase(fetchLogin.fulfilled, (state, action) => {
-        state.token = action.payload;
-      })
-      .addCase(fetchUserProfile.fulfilled, (state, action) => {
-        state.userInfo = action.payload;
-      });
+    builder.addCase(fetchUserProfile.fulfilled, (state, action) => {
+      state.userInfo = action.payload;
+    });
   },
 });
-
-export const fetchLogin = createAsyncThunk(
-  'user/fetchLogin',
-  async userData => {
-    const res = await fetch('http://svcy3.myclass.vn/api/Users/signin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
-    if (res.ok === false) {
-      console.log('Something went wrong!');
-      throw new Error(mes);
-    }
-    const json = await res.json();
-    return json.content.accessToken;
-  },
-);
 
 export const fetchUserProfile = createAsyncThunk(
   'user/fetchUserProfile',

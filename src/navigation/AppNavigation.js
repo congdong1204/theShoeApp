@@ -10,6 +10,8 @@ import ProductDetailScreen from '../screens/productDetail';
 import FavoriteScreen from '../screens/favorite';
 import UserProfileScreen from '../screens/userProfile';
 import EditUserProfileScreen from '../screens/editUserProfile';
+import SignUpSreen from '../screens/login_signup/SignUpScreen';
+import StartUpScreen from '../screens/startup';
 import Routes from './Routes';
 
 const Stack = createStackNavigator();
@@ -23,9 +25,11 @@ const RootNavigation = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
-        screenOptions={{headerShown: false}}
-        initialRouteName={Routes.LOGIN_SCREEN}>
+        screenOptions={{headerShown: false, gestureDirection: 'horizontal'}}
+        initialRouteName={Routes.START_UP_SCREEN}>
+        <Stack.Screen name={Routes.START_UP_SCREEN} component={StartUpScreen} />
         <Stack.Screen name={Routes.LOGIN_SCREEN} component={LoginScreen} />
+        <Stack.Screen name={Routes.SIGNUP_SCREEN} component={SignUpSreen} />
         <Stack.Screen name={Routes.DRAWER_MENU} component={DrawerMenu} />
         <Stack.Screen name={Routes.HOME_SCREEN} component={HomeScreen} />
         <Stack.Screen

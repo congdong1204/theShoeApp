@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {SkypeIndicator} from 'react-native-indicators';
 
 export default LoadingView = ({indicatorColor, indicatorStyle}) => {
   return (
     <View style={styles.container}>
+      <View style={styles.bgView} />
       <View style={styles.indicatorView}>
         <SkypeIndicator
           style={[styles.indicatorStyle, indicatorStyle]}
@@ -18,15 +19,24 @@ export default LoadingView = ({indicatorColor, indicatorStyle}) => {
 
 const styles = StyleSheet.create({
   container: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
     position: 'absolute',
-    width: '100%',
-    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  indicatorView: {
+  bgView: {
     width: '100%',
     height: '100%',
+    top: 0,
+    left: 0,
+    position: 'absolute',
     backgroundColor: 'black',
     opacity: 0.6,
+  },
+  indicatorView: {
+    width: 80,
+    height: 80,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -19,8 +18,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Input from '../../components/Input';
 import Checkbox from '../../components/Checkbox';
 import Color from '../../constants/Color';
-import authSlice from '../../slice/AuthSlice';
-import {fetchUserProfile} from '../../slice/AuthSlice';
+import {fetchLogin, fetchUserProfile} from '../../slice/AuthSlice';
 import {
   fetchCategories,
   fetchAllProducts,
@@ -36,12 +34,16 @@ const SingupSchema = Yup.object().shape({
     .min(6, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
+  confirmPassword: Yup.string().oneOf(
+    [Yup.ref('password'), null],
+    'Passwords must match',
+  ),
 });
 
 MaterialCommunityIcons.loadFont();
 Entypo.loadFont();
 
-const LoginScreen = () => {
+const SignUpSreen = () => {
   const dispatch = useDispatch();
   const [checkRemember, setCheckRemember] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,37 +59,26 @@ const LoginScreen = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch('http://svcy3.myclass.vn/api/Users/signin', {
+      const res = await fetch('http://svcy3.myclass.vn/api/Users/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
       });
       if (!res.ok) {
         const errorData = await res.json();
         const errorMessage = errorData.message;
         let message = 'Something went wrong!';
-        if (errorMessage === 'Sai email hoặc mật khẩu!') {
-          message = 'This email could not be found!';
-        } else if (errorMessage === 'Đăng nhập thất bại!') {
-          message = 'Login Failed!';
+        if (errorMessage === 'Email đã được sử dụng!') {
+          message = 'The email address exists already!';
         }
         throw new Error(message);
       }
-      const data = await res.json();
-      dispatch(authSlice.actions.getUserToken(data.content.accessToken));
-      if (checkRemember) {
-        await AsyncStorage.setItem(
-          'userData',
-          JSON.stringify({token: data.content.accessToken}),
-        );
-      }
-      await dispatch(fetchUserProfile());
-      await dispatch(fetchCategories());
-      await dispatch(fetchAllProducts());
-      await dispatch(fetchFavoriteProducts());
-      NavigationService.navigate(Routes.DRAWER_MENU);
+      NavigationService.navigate(Routes.LOGIN_SCREEN);
     } catch (err) {
       setError(err.message);
     }
@@ -108,12 +99,12 @@ const LoginScreen = () => {
         <Text style={styles.logoText}>ShoeApp</Text>
       </View>
 
-      <Text style={styles.title}>Let’s Sign You In</Text>
-      <Text style={styles.message}>Welcome back, you’ve been missed!</Text>
+      <Text style={styles.title}>Getting Started</Text>
+      <Text style={styles.message}>Create an account to continue!</Text>
 
       <View style={styles.signinWrapper}>
         <Formik
-          initialValues={{email: '', password: ''}}
+          initialValues={{email: '', password: '', confirmPassword: ''}}
           validationSchema={SingupSchema}
           onSubmit={values => handleSubmit(values)}>
           {({
@@ -144,6 +135,15 @@ const LoginScreen = () => {
                 error={errors.password}
                 touched={touched.password}
               />
+              <Input
+                label="Confirm Password"
+                placeholder="Please enter your password"
+                inputValue={values.confirmPassword}
+                textChangeHandler={handleChange('confirmPassword')}
+                textBlurHandler={handleBlur('confirmPassword')}
+                error={errors.confirmPassword}
+                touched={touched.confirmPassword}
+              />
               <View style={styles.rememberUserWrapper}>
                 <Checkbox
                   checked={checkRemember}
@@ -154,7 +154,7 @@ const LoginScreen = () => {
               <TouchableOpacity
                 style={styles.buttonWrapper}
                 onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Sign In</Text>
+                <Text style={styles.buttonText}>Sign Up</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -162,10 +162,10 @@ const LoginScreen = () => {
       </View>
 
       <View style={styles.signupWrapper}>
-        <Text style={styles.signupText}>Don’t have an account? </Text>
+        <Text style={styles.signupText}>Already have an account? </Text>
         <TouchableOpacity
-          onPress={() => NavigationService.navigate(Routes.SIGNUP_SCREEN)}>
-          <Text style={styles.signupTextPress}>Sign Up</Text>
+          onPress={() => NavigationService.navigate(Routes.LOGIN_SCREEN)}>
+          <Text style={styles.signupTextPress}>Sign In</Text>
         </TouchableOpacity>
       </View>
 
@@ -310,4 +310,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default SignUpSreen;

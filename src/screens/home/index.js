@@ -36,8 +36,14 @@ const HomeScreen = () => {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
+    console.log(loading);
     dispatch(fetchProductsByCategory('ADIDAS'));
-    setLoading(false);
+    const delay = async () => {
+      await setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    };
+    delay();
   }, []);
 
   const handlePressCategory = item => {
@@ -127,7 +133,7 @@ const HomeScreen = () => {
         leftIcon="menu"
         onPressLeft={() => NavigationService.toggleDrawer()}
       />
-      <View style={styles.categoryContainer}>
+      <View>
         <FlatList
           data={categories}
           renderItem={({item}) => renderCategories(item)}
@@ -153,22 +159,37 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.background,
   },
-  categoryContainer: {
-    marginBottom: 12,
-  },
   categoryWrapper: {
     backgroundColor: Color.white,
     paddingVertical: 8,
     paddingHorizontal: 16,
     marginLeft: 12,
+    marginBottom: 12,
     borderRadius: 8,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   categoryWrapperSelected: {
     backgroundColor: Color.primary,
     paddingVertical: 8,
     paddingHorizontal: 16,
     marginLeft: 12,
+    marginBottom: 12,
     borderRadius: 8,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   categoryText: {
     fontFamily: 'Manrope-Medium',
@@ -190,7 +211,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     padding: 12,
     shadowColor: 'black',
-    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,

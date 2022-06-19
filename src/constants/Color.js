@@ -1,13 +1,16 @@
 export default {
   // primary: '#2bb9af',
   primary: '#2a1a5f',
+  // primary: '#F35D38',
   accent: '#e82a34',
   // accent: '#0c0d34',
   gray: '#E5E5E5',
   textDark: '#111A2C',
   textLight: '#525C67',
   textWhite: 'white',
-  background: '#F5F5F8',
+  background: '#F6F7F7',
   red: '#FF1717',
-  white: '#FFF',
+  white: '#FBFCFE',
+  blue: '#0064C0',
+  black: '#0C0D0E',
 };
