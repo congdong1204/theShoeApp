@@ -11,13 +11,6 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Color from '../constants/Color';
 
 Entypo.loadFont();
-const heightNavi = h =>
-  StyleSheet.create({
-    fullView: {
-      width: '100%',
-      height: 60 + h,
-    },
-  });
 
 const Header = ({
   title,
@@ -29,12 +22,14 @@ const Header = ({
   titleColor = Color.primary,
 }) => {
   const [h, setH] = useState(0);
+
   useEffect(() => {
     const {StatusBarManager} = NativeModules;
     setH(StatusBarManager.HEIGHT);
   }, []);
+
   return (
-    <View style={heightNavi(h).fullView}>
+    <View>
       {Platform.OS === 'ios' && (
         <View style={{backgroundColor: backgroundColor, height: h}} />
       )}
@@ -55,10 +50,10 @@ const Header = ({
 
 const styles = StyleSheet.create({
   container: {
+    height: 60,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 60,
     width: '100%',
     paddingHorizontal: 12,
   },

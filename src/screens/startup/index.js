@@ -22,9 +22,10 @@ const StartUpScreen = () => {
   useEffect(() => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem('userData');
-      console.log(userData);
       if (!userData) {
-        NavigationService.navigate(Routes.LOGIN_SCREEN);
+        setTimeout(() => {
+          NavigationService.navigate(Routes.LOGIN_SCREEN);
+        }, 1000);
         return;
       }
       const transformData = JSON.parse(userData);
@@ -34,7 +35,9 @@ const StartUpScreen = () => {
       await dispatch(fetchCategories());
       await dispatch(fetchAllProducts());
       await dispatch(fetchFavoriteProducts());
-      NavigationService.navigate(Routes.DRAWER_MENU);
+      setTimeout(() => {
+        NavigationService.navigate(Routes.DRAWER_MENU);
+      }, 1000);
     };
     tryLogin();
   }, []);

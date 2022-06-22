@@ -13,7 +13,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import NavigationService from '../../navigation';
 import Header from '../../components/Header';
 import Color from '../../constants/Color';
-import {set} from 'react-native-reanimated';
 
 Feather.loadFont();
 
@@ -77,7 +76,6 @@ const ProductDetailScreen = ({route}) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <Text></Text>
     </View>
   );
 };

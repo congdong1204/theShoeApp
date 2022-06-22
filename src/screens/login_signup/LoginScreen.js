@@ -31,11 +31,15 @@ import Routes from '../../navigation/Routes';
 import LoadingView from '../../components/LoadingView';
 
 const SingupSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
+  email: Yup.string().email('Invalid email!').required('Required'),
   password: Yup.string()
     .min(6, 'Too Short!')
-    .max(50, 'Too Long!')
-    .required('Required'),
+    .max(12, 'Too Long!')
+    .required('Required')
+    .matches(
+      '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$',
+      'Invalid password!',
+    ),
 });
 
 MaterialCommunityIcons.loadFont();
@@ -133,7 +137,7 @@ const LoginScreen = () => {
                 textBlurHandler={handleBlur('email')}
                 error={errors.email}
                 touched={touched.email}
-                // autoCapitalize={false}
+                autoCapitalize="none"
               />
               <Input
                 label="Password"
@@ -143,6 +147,8 @@ const LoginScreen = () => {
                 textBlurHandler={handleBlur('password')}
                 error={errors.password}
                 touched={touched.password}
+                autoCapitalize="none"
+                secureTextEntry
               />
               <View style={styles.rememberUserWrapper}>
                 <Checkbox

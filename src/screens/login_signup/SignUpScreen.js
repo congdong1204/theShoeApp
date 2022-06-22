@@ -11,19 +11,11 @@ import {
 } from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {useDispatch} from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 import Input from '../../components/Input';
-import Checkbox from '../../components/Checkbox';
 import Color from '../../constants/Color';
-import {fetchLogin, fetchUserProfile} from '../../slice/AuthSlice';
-import {
-  fetchCategories,
-  fetchAllProducts,
-  fetchFavoriteProducts,
-} from '../../slice/ProductSlice';
 import NavigationService from '../../navigation';
 import Routes from '../../navigation/Routes';
 import LoadingView from '../../components/LoadingView';
@@ -33,7 +25,11 @@ const SingupSchema = Yup.object().shape({
   password: Yup.string()
     .min(6, 'Too Short!')
     .max(50, 'Too Long!')
-    .required('Required'),
+    .required('Required')
+    .matches(
+      '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$',
+      'Invalid password!',
+    ),
   confirmPassword: Yup.string().oneOf(
     [Yup.ref('password'), null],
     'Passwords must match',
@@ -44,8 +40,6 @@ MaterialCommunityIcons.loadFont();
 Entypo.loadFont();
 
 const SignUpSreen = () => {
-  const dispatch = useDispatch();
-  const [checkRemember, setCheckRemember] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
@@ -124,7 +118,7 @@ const SignUpSreen = () => {
                 textBlurHandler={handleBlur('email')}
                 error={errors.email}
                 touched={touched.email}
-                // autoCapitalize={false}
+                autoCapitalize="none"
               />
               <Input
                 label="Password"
@@ -134,6 +128,8 @@ const SignUpSreen = () => {
                 textBlurHandler={handleBlur('password')}
                 error={errors.password}
                 touched={touched.password}
+                autoCapitalize="none"
+                secureTextEntry
               />
               <Input
                 label="Confirm Password"
@@ -143,14 +139,9 @@ const SignUpSreen = () => {
                 textBlurHandler={handleBlur('confirmPassword')}
                 error={errors.confirmPassword}
                 touched={touched.confirmPassword}
+                autoCapitalize="none"
+                secureTextEntry
               />
-              <View style={styles.rememberUserWrapper}>
-                <Checkbox
-                  checked={checkRemember}
-                  checkHandle={() => setCheckRemember(!checkRemember)}
-                />
-                <Text style={styles.rememberUserText}>Remember me</Text>
-              </View>
               <TouchableOpacity
                 style={styles.buttonWrapper}
                 onPress={handleSubmit}>
@@ -230,18 +221,6 @@ const styles = StyleSheet.create({
   signinWrapper: {
     paddingHorizontal: 24,
     marginTop: 32,
-  },
-
-  rememberUserWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  rememberUserText: {
-    fontSize: 14,
-    color: Color.textLight,
-    fontFamily: 'Manrope-Regular',
-    marginLeft: 12,
   },
   buttonWrapper: {
     backgroundColor: Color.accent,
